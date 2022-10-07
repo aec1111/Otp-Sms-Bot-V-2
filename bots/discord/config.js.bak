@@ -1,10 +1,1 @@
-module.exports = {
-    apiurl: 'https://9797-176-88-126-117.ngrok.io',
-    apipassword: '6fdd78c00f26b69dff5d5496cfa7f9c6',
 
-    discordtoken: 'OTE4Mjk1MDAzNTU2NjI2NDUz.G1rqvf.K6Cm_aDSXml5tLT-l_UH18PP5UaMyJ68ATyDRw',
-    discordprefix: '.',
-    secretpassword: 'W12QRFYtbF80uo4qNGLJp9Jev9RI0ge2',
-    botuser_rolename: 'Bot User',
-    admin_rolename: 'Admin'
-};
