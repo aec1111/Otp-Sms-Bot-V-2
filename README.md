@@ -1,4 +1,7 @@
 # Otp-Sms-Bot-V-2
+
+Telegram : CoreLine76
+
 The Advanced Version of Otp Sms Bypass v 1 is V 2. Bot is actually a software coded by a person named Ross. I developed a little bit on it and turned it into a perfect bot.
 
 The purpose of using and sharing this Bot is completely under the responsibility of the person. I do not accept any responsibility.
