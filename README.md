@@ -1,176 +1,252 @@
-# Otp-Sms-Bot-V-2
+# SIP Dialer with TTS Integration
 
-Telegram : CoreLine76
+A Node.js/TypeScript application that provides SIP-based calling capabilities with Text-to-Speech integration, comprehensive error handling, logging, and a command-line interface.
 
-The Advanced Version of Otp Sms Bypass v 1 is V 2. Bot is actually a software coded by a person named Ross. I developed a little bit on it and turned it into a perfect bot.
+## Features
 
-The purpose of using and sharing this Bot is completely under the responsibility of the person. I do not accept any responsibility.
+- SIP protocol support for making and receiving calls
+- Text-to-Speech integration using Google TTS API
+- Comprehensive error handling for SIP timeouts, network failures, TTS API errors, and audio playback issues
+- Winston-based logging with multiple verbosity levels
+- Phone number and SIP credential validation
+- Interactive CLI with keyboard shortcuts
+- Graceful shutdown and resource cleanup
 
-System Requirement: 
+## Installation
 
-NodeJs : https://nodejs.org/en/download/
+### Prerequisites
 
-Twilio API: https://www.twilio.com/
+- Node.js (v14 or higher)
+- npm (v6 or higher)
 
-I'm Sharing because V 3 of this Bot is live now. If you have any questions about the bot, feel free to ask.
+### Setup
 
-Features of the bot.
-1-)Full language pack
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd sip-dialer
+   ```
 
-2-)4 ,5,6 and 8 digit otp modules
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-3-)Search Custom by entering name and company name
+3. Configure environment variables (create a `.env` file):
+   ```env
+   SIP_USERNAME=your_sip_username
+   SIP_PASSWORD=your_sip_password
+   SIP_DOMAIN=your_sip_domain.com
+   SIP_DISPLAY_NAME=Your Display Name
+   TTS_LANG=en
+   TTS_SLOW=false
+   ```
 
-4-)Ability to call without changing the configuration file with the number registered in Twillio
+## Usage
 
-5-)Authorize the user you want with the Discord Bot
+### Starting the Application
 
-6-)Seeing every number entered online after a call
-
-7-)Search with audio copies of all social media platforms
-
-8-)Making calls with all bank voices of the world
-
-9-)Supports calling all Banks of the world
-
-10-)If you want, you can make a call with the number of the country you want to call.
-
-11-)Ability to hide calls by creating an Incognito Script
-
-12-)Adding the audio file you want for calls effortlessly
-
-13-)Dozens more features that we can't count yet.
-
-14-)Enjoying the 1-time update opportunity for free
-
-15-)Happy :Those who bought the boat before. you have an update. System-specific 5-digit code can now be obtained
-
--------------------------------------------------------------------------------------------------------------------------------------
-API
-The API requests availables & working :
-
-/call with POST DATA :
-
-to: theClientPhoneNumber
-user: theUser
-service: theUsedService
-name: theNameOfTheUser
-password: yourApiPassword
-/get with POST DATA :
-
-callSid: theCallSid
-password: yourApiPassword
-/stream/service with GET DATA :
-
-service: theServiceNameYouWannaUse
-/voice/password with POST DATA :
-
-password: yourApiPassword
-callSid: theCallSid
-Digits: theDigitsEnteredByTheUSer (not required)
-Bot Commands
-All the Admin commands :
-
-!user add @user : allow someone to use the bot & the calls
-!user delete @user : remove someone or an admin from the bot
-!user info @user : get infos from a user
-!user setadmin @user : set a user to admin
-All the Users commands :
-
-!secret yoursecretpassword @user : set a user to admin without been admin
-!call phonenumber service or for example !call 33612345678 paypal : call the phonenumber using the bot and get the sms code
-The differents call services supported :
-
-Paypal
-Google
-Snapchat
-Instagram
-Facebook
-Whatsapp
-Twitter
-Amazon
-Cdiscount
-Default : work for all the systems
-Banque : bypass 3D Secure
-How it works ?
-When you do a !call 3312345678 paypal, the Discord Bot sends a post request to our private api, who is gonna save the call into our sqlite DB and send the call to our twilio API.
-The Twilio API use our /status route to know what to do in the call, the status route returns TwiML code to Twilio.
-The /status route returns the self hosted service song using the /stream/service route.
-If the user enter the digit code using the numpad, the song stops, it thanks him for the code, and end the call.
-The /status route send the code to your discord channel using a webhook.
-Prerequisite
-Node.js & NPM from the last version.
-git installed (not necessarily)
-Open ports
-A twilio account
-A discord account (if you use the bot)
-Install the API
-Download the API Files from the github
-
-git clone https://github.com/Ross1337/SMSBotBypass.git
-
-Go to our API folder
-
-cd /SMSBotBypass/api/
-
-Install the dependencies
-
-npm i
-
-Start the api, wait 15s, and then, stop it
-
+```bash
 npm start
+```
 
-Modify the config.js file
+### CLI Commands
 
-Add your twilio AccountSid & AuthToken
-Your twilio caller id
-Your actual IP to run the web server
-Open the port 1337
+The application provides a command-line interface for controlling the SIP dialer:
 
-To check if everything works fine, I did a full test system. If your Twilio account is not upgrade, before the test, go to the /test/call.js file and modify the phone number line 122 with your phone numer.
+#### Dial a Number
 
+```bash
+node src/cli/index.js dial <phone_number> [-t|--text "<tts_text>"]
+```
+
+Examples:
+```bash
+# Dial a number without TTS
+node src/cli/index.js dial +1234567890
+
+# Dial a number with TTS message
+node src/cli/index.js dial +1234567890 -t "Hello, this is an automated message."
+```
+
+#### Hang Up Current Call
+
+```bash
+node src/cli/index.js hangup
+```
+
+#### Check Status
+
+```bash
+node src/cli/index.js status
+```
+
+#### Show Help
+
+```bash
+node src/cli/index.js --help
+```
+
+### Keyboard Shortcuts
+
+During an active call:
+- `Ctrl+C`: Hang up the call and exit the application
+
+## Configuration
+
+### SIP Configuration
+
+Configure SIP connection settings via environment variables:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `SIP_USERNAME` | SIP username for authentication | (required) |
+| `SIP_PASSWORD` | SIP password for authentication | (required) |
+| `SIP_DOMAIN` | SIP domain/server address | (required) |
+| `SIP_DISPLAY_NAME` | Display name for SIP calls | Username |
+
+### TTS Configuration
+
+Configure Text-to-Speech settings:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `TTS_LANG` | Language code for TTS (e.g., 'en', 'es', 'fr') | 'en' |
+| `TTS_SLOW` | Whether to speak slowly | 'false' |
+
+### Logging Configuration
+
+Logging is handled automatically with Winston. Log files are stored in the `logs/` directory:
+- `error.log`: Contains only error-level logs
+- `all.log`: Contains all logs
+
+Log levels (in order of severity):
+- error
+- warn
+- info
+- http
+- debug
+
+Set the log level via `NODE_ENV`:
+- Production: `info` level (default)
+- Development: `debug` level
+
+## Error Handling
+
+The application implements comprehensive error handling for various scenarios:
+
+### SIP Errors
+- `SipTimeoutError`: Thrown when SIP operations (registration, calls) timeout
+- Network errors during SIP communication
+
+### TTS Errors
+- `TtsApiError`: Thrown when Google TTS API requests fail
+- Validation errors for text input
+
+### Audio Playback Errors
+- `AudioPlaybackError`: Thrown when audio playback fails
+
+### Validation Errors
+- `ValidationError`: Thrown when phone numbers or SIP credentials are invalid
+
+All errors are logged appropriately and can be caught by calling code.
+
+## Project Structure
+
+```
+src/
+├── cli/                  # Command-line interface
+│   └── index.js          # CLI entry point
+├── sip/                  # SIP protocol implementation
+│   └── dialer.js         # SIP dialer class
+├── tts/                  # Text-to-speech service
+│   └── service.js        # TTS service class
+├── utils/                # Utility functions
+│   ├── logger.js         # Winston logger configuration
+│   ├── errors.js         # Custom error classes
+│   └── validation.js     # Input validation functions
+└── index.js              # Main application entry point
+```
+
+## API Reference
+
+### SipDialer Class
+
+Handles SIP connection, registration, and call management.
+
+#### Constructor
+```javascript
+new SipDialer(config)
+```
+Config object should contain:
+- `username`: SIP username
+- `password`: SIP password
+- `domain`: SIP domain
+- `displayName`: Optional display name
+
+#### Methods
+- `register()`: Register with SIP server
+- `call(target)`: Make outbound call to target SIP URI
+- `answer()`: Answer incoming call
+- `hangup()`: End current call
+- `hold()`: Hold current call
+- `unhold()`: Unhold current call
+- `unregister()`: Unregister from SIP server
+- `disconnect()`: Clean up all resources
+- `isRegisteredStatus()`: Get registration status
+- `getSession()`: Get current session object
+
+### TtsService Class
+
+Handles Text-to-Speech conversion.
+
+#### Constructor
+```javascript
+new TtsService(options)
+```
+Options object can contain:
+- `lang`: Language code (default: 'en')
+- `slow`: Speak slowly (default: false)
+- `host`: Google TTS host (default: 'https://translate.google.com')
+- `timeout`: Request timeout in ms (default: 10000)
+
+#### Methods
+- `textToSpeech(text)`: Convert text to speech and return audio URL
+- `static getAvailableLanguages()`: Get list of supported languages
+- `static isLanguageSupported(langCode)`: Check if language is supported
+
+## Development
+
+### Running Tests
+
+```bash
 npm test
+```
 
-![testing](https://user-images.githubusercontent.com/92768020/194468854-925a7f9a-405a-4ba7-937d-365f86567804.png)
+### Linting
 
-Your private API now works !
+```bash
+npm run lint
+```
 
-Be carefull, you also need to change the TTS Language, go to https://www.twilio.com/console/voice/twiml/text-to-speech and change the TTS Language from English to French with the Lea voice.
+### Building
 
-Install the Discord Bot
-Take your API Password from you config.js file in your api folder we are gonna use it
+```bash
+npm run build
+```
 
-cd ../bots/discord
+## Contributing
 
-Modify the config.js file
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a pull request
 
-Add API Url & Api Password
-Your discord bot token
-Your actual IP to run the web server
-Change the secret password
-Create two discord roles, one "Admin" with Administrator permissions, and the other one "Bot User" with any permission.
+## License
 
-Add the bot to the discord server
+This project is licensed under the ISC License.
 
-Initialize the discord bot
+## Disclaimer
 
-npm i
-
-You can now start the discord bot
-
-node bot.js
-
-You can get all the informations neeeded on discord doing !help
-
-![11](https://user-images.githubusercontent.com/92768020/194468962-96d0801d-5c56-4da1-b4af-1defeb0e56d4.png)
-
-![22](https://user-images.githubusercontent.com/92768020/194469005-c62514ed-18f1-475e-bde2-ca593cc6e9c5.png)
-
-![33](https://user-images.githubusercontent.com/92768020/194469026-82c4b074-fb45-437c-8e26-9dda93b0b94d.png)
-
-Disclaimer
-This code is only a POC code, do not use it illegally. You could been arrested to use badly this code. Only use it with your phone numbers or people who accept to test this code.
-
-Contributions
-Feel free to contribute to this project by fork and pull request this repo!
+This software is for educational purposes only. Ensure you have proper authorization before making any calls. The developers are not responsible for any misuse of this software.
