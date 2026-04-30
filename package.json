@@ -1,0 +1,23 @@
+{
+  "name": "gt__maple__b4e3d57e",
+  "version": "1.0.0",
+  "description": "Telegram : CoreLine76",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "commander": "^14.0.3",
+    "google-tts-api": "^2.0.2",
+    "sip": "^0.0.6",
+    "winston": "^3.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "typescript": "^6.0.3"
+  }
+}
